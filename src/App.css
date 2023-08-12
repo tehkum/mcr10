@@ -47,7 +47,13 @@
   overflow: auto
 }
 
+button {
+  cursor: pointer;
+}
 
+button:hover {
+  background-color: blue;
+}
 
 @media (max-width: 600px) {
   .layout {

@@ -7,6 +7,7 @@
     width: 250px;
     border-radius: 10px;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    cursor: pointer;
 }
 
 .dept-card {
@@ -20,7 +21,9 @@
     border-radius: 10px;
     height: 100px;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    cursor: pointer;
 }
+
 
 .list-card h2 {
     font-size: 25px;

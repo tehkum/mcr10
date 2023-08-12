@@ -50,6 +50,11 @@ button {
     border-radius: 5px;
 }
 
+.filter-section button:hover {
+    background-color: blue;
+
+}
+
 .filter-section {
     position: sticky;
     top: 0;
