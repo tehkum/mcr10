@@ -2,9 +2,11 @@ import { Container, MenuItem } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { useItems } from "../context/ItemContext";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 export default function AddNew() {
   const { itemDispatch } = useItems();
+  const [isError, setErr] = useState(false);
   const [newItem, setNew] = useState({
     name: "",
     description: "",
@@ -16,14 +18,37 @@ export default function AddNew() {
     imageUrl: "",
     delivered: 0,
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
+    setErr(false);
     const { name, value } = e.target;
     setNew((prevData) => ({
       ...prevData,
       [name]: value,
     }));
     console.log(newItem);
+  };
+
+  const handleCheckSubmit = () => {
+    if (
+      newItem.name &&
+      newItem.description &&
+      newItem.department &&
+      newItem.price &&
+      newItem.price &&
+      newItem.sku &&
+      newItem.supplier &&
+      newItem.stock &&
+      newItem.imageUrl &&
+      newItem.delivered
+    ) {
+      setErr(false);
+      itemDispatch({ type: "SET_NEW_ITEM", payload: newItem });
+      navigate("/products/all");
+    } else {
+      setErr(true);
+    }
   };
 
   const dept = [
@@ -137,11 +162,8 @@ export default function AddNew() {
         value={newItem?.imageUrl}
         onChange={handleChange}
       />
-      <button
-        onClick={() => itemDispatch({ type: "SET_NEW_ITEM", payload: newItem })}
-      >
-        Add Product
-      </button>
+      {isError && <p style={{ color: "red" }}>Enter All Fields</p>}
+      <button onClick={handleCheckSubmit}>Add Product</button>
     </Container>
   );
 }
