@@ -1,21 +1,25 @@
-nav {
-    background-color: rgba(38,38,38,1);
-    position: sticky;
-    top: 0;
-    color: white;
-    padding: 0 1rem;
-}
-nav h1{
-    margin-top: 0;
-}
-
-.pages-nav {
+.nav-bar {
     display: flex;
-    justify-content: space-evenly;
-    margin-bottom: 0.5rem ;
+    flex-direction: column;
+    height: 100vh;
+    gap: 10px;
+    background-color: #202124;
+    padding: 0.5rem
+        /* gap: 20px; */
 }
 
-.pages-nav p {
+.nav-link {
     color: white;
     text-decoration: none;
+    font-size: 24px;
+    margin-top: 10px;
+}
+
+.nav-link:active {
+    font-weight: 200;
+}
+
+.nav-bar h1 {
+    color: white;
+    font-size: 24px;
 }

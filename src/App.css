@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -34,5 +34,23 @@
   }
   to {
     transform: rotate(360deg);
+  }
+} */
+.layout {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+
+}
+
+.main {
+  height: 100vh;
+  overflow: auto
+}
+
+
+
+@media (max-width: 600px) {
+  .layout {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
 }

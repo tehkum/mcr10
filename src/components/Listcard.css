@@ -1,0 +1,32 @@
+.list-card {
+    background-color: #f3f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    width: 250px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.dept-card {
+    background-color: #f3f4f4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    width: 250px;
+    border-radius: 10px;
+    height: 100px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.list-card h2 {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.list-card p {
+    font-size: 20px;
+}

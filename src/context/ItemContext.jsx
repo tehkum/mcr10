@@ -1,51 +1,66 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { HabitData } from "../data";
+import { createContext, useContext, useEffect, useReducer } from "react";
+import { inventoryData } from "../data";
 
 export const manageItem = createContext();
 
-export function ItemContext({children}){
-    const [ data, setData ] = useState([]);
-    const [ showForm, setShowForm ] = useState(false);
-    const [ archieveData, setArchieveData ] = useState([])
-    const [formData, setForm] = useState({
-        id: Math.floor(Math.random() * 10000 + 10000).toString().substring(1),
-        name: "",
-        repeat: "",
-        goal: "",
-        timeOfDay: "",
-        startDate: "",
-      });
-  const [showEdit, setShowEdit] = useState(false)
+export function ItemContext({ children }) {
+  const [itemState, itemDispatch] = useReducer(itemReducer, {
+    itemData: inventoryData,
+    displayItem: {},
+    itemSetted: false,
+    deptFilter: "",
+    typeFilter: "",
+  });
 
-      const archieveDeleteHandler = (name) => {
-        setArchieveData(archieveData.filter(item=> !(item.name === name)))
-      }
+  function itemReducer(state, action) {
+    switch (action.type) {
+      case "SET_ITEM":
+        return {
+          ...state,
+          itemData: [
+            ...inventoryData,
+            ...(JSON.parse(localStorage.getItem("moreItems")) ?? []),
+          ],
+        };
 
+      case "SET_DISPLAY_ITEM":
+        return {
+          ...state,
+          displayItem: state?.itemData?.find(
+            (item) => item.id === +action.payload
+          ),
+        };
 
+      case "SET_NEW_ITEM":
+        localStorage.setItem(
+          "moreItems",
+          JSON.stringify([
+            ...(JSON.parse(localStorage.getItem("moreItems")) ?? []),
+            action.payload,
+          ])
+        );
+        return { ...state, itemSetted: !state?.itemSetted };
 
-      const archieveHandler = (name) => {
-        const archieve = data.find(item=>item.name === name)
-        setArchieveData([...archieveData, archieve]);
-        setData(data.filter(item=> !(item.name === name) ))
-      }
-    
-      const submitHandler = () => {
-        setData([...data, formData])
-      }
-    
-      const deleteHandler = (name) => {
-        setData(data.filter(item=> !(item.name === name)))
-      }
+      case "DEPT_FILTER":
+        return { ...state, deptFilter: action.payload };
 
-    const clickHandler = () => {
-        setShowForm(true)
+      case "TYPE_FILTER":
+        return { ...state, typeFilter: action.payload };
+
+      default:
+        return { ...state };
     }
+  }
 
-    useEffect(()=>{
-        setData(HabitData);
-    },[])
+  useEffect(() => {
+    itemDispatch({ type: "SET_ITEM" });
+  }, [itemState?.itemSetted]);
 
-    return <manageItem.Provider value={{data, showEdit, setShowEdit, setData, clickHandler, archieveDeleteHandler, archieveData, archieveHandler, setShowForm, formData, setForm, submitHandler, deleteHandler, showForm}}>{children}</manageItem.Provider>
+  return (
+    <manageItem.Provider value={{ itemState, itemDispatch }}>
+      {children}
+    </manageItem.Provider>
+  );
 }
 
 export const useItems = () => useContext(manageItem);
